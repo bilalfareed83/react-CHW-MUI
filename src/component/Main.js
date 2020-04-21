@@ -7,17 +7,43 @@ import {
   RadioGroup,
   FormControlLabel,
   FormLabel,
-  Checkbox,
 } from '@material-ui/core';
+import Vaccines from './Vaccines';
+import Reason from './Reason';
+import './StyleMain.css';
 
 class Main extends Component {
   state = {
     form: [],
-    houseNumber: '12',
+    area: '',
+    uc: '',
+    street: '',
+    building: '',
+
+    // Basic information
+    houseNumber: '',
     codeOfHighRisk: '',
+    cast: '',
+    guardian: '',
+    language: '',
+    socioeconomicsGroup: '',
+
+    // Child Information
+    childName: '',
+    numberOfChild: '',
+    dateOfBirth: '',
+    ageOfChild: '',
+    gender: '',
+    vaccinationStatus: '',
     ipv: false,
     peniaIII: false,
     bcg: false,
+    code1: false,
+    code2: false,
+    code3: false,
+    code4: false,
+    code5: false,
+    code6: false,
   };
 
   addForm = () => {
@@ -43,37 +69,64 @@ class Main extends Component {
     this.setState({ [e.target.name]: e.target.checked });
   };
 
-  // handler = (e, index) => {
-  //   this.state.form = e.targe.value;
-  //   this.setState({ form: this.state.form });
-  // };
-
   render() {
+    console.log(this.props);
     const {
       form,
+      area,
+      uc,
+      street,
+      building,
+
+      // Basic information
       houseNumber,
       codeOfHighRisk,
+      cast,
+      guardian,
+      language,
+      socioeconomicsGroup,
+
+      // Child Information
+      childName,
+      numberOfChild,
+      dateOfBirth,
+      ageOfChild,
+      gender,
+      vaccinationStatus,
       ipv,
-      bcg,
       peniaIII,
+      bcg,
+      code1,
+      code2,
+      code3,
+      code4,
+      code5,
+      code6,
     } = this.state;
     return (
       <div>
+        {/* <Nav /> */}
         <Typography variant="h3">CHW Survay </Typography>
-        {/* <Typography variant="h3" gutterBottom>
-          From
-        </Typography> */}
+        <div className="button">
+          <Button
+            variant="contained"
+            color="primary"
+            component="span"
+            onClick={(e) => {
+              this.addForm(e);
+            }}
+          >
+            Add Form
+          </Button>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={this.props.signout}
+          >
+            Sign out
+          </Button>
+        </div>
 
-        <Button
-          variant="contained"
-          color="primary"
-          component="span"
-          onClick={(e) => {
-            this.addForm(e);
-          }}
-        >
-          Add Form
-        </Button>
         {form.map((val, index) => {
           return (
             <form
@@ -107,10 +160,30 @@ class Main extends Component {
                 name="houseNumber"
                 value={houseNumber}
               />
-              <TextField label="Area or Mohallah Name" />
-              <TextField label="UC Name" />
-              <TextField label="Street Name" />
-              <TextField label="Building Name" />
+              <TextField
+                label="Area or Mohallah Name"
+                name="area"
+                value={area}
+                onChange={this.handler}
+              />
+              <TextField
+                label="UC Name"
+                name="uc"
+                value={uc}
+                onChange={this.handler}
+              />
+              <TextField
+                label="Street Name"
+                name="street"
+                value={street}
+                onChange={this.handler}
+              />
+              <TextField
+                label="Building Name"
+                name="building"
+                value={building}
+                onChange={this.handler}
+              />
               {/* Basic Information  */}
               <Typography variant="h6">Basic Information </Typography>
               <TextField label="House Number" />
@@ -130,32 +203,71 @@ class Main extends Component {
                 <FormControlLabel value="5" control={<Radio />} label="5" />
                 <FormControlLabel value="6" control={<Radio />} label="6" />
               </RadioGroup>
-              <TextField label="Cast" />
-              <TextField label="Guardian" />
-              <TextField label="Language" />
-              <TextField label="Socioeconomics Group" />
+              <TextField
+                label="Cast"
+                name="cast"
+                value={cast}
+                onChange={this.handler}
+              />
+              <TextField
+                label="Guardian"
+                name="guardian"
+                value={guardian}
+                onChange={this.handler}
+              />
+              <TextField
+                label="Language"
+                name="language"
+                value={language}
+                onChange={this.handler}
+              />
+              <TextField
+                label="Socioeconomics Group"
+                name="socioeconomicsGroup"
+                value={socioeconomicsGroup}
+                onChange={this.handler}
+              />
               <br />
               {/* Child Information */}
               <Typography variant="h6">Child Information </Typography>
-              <TextField label="Child Name" />
-              <TextField label="Number of Child" type="Number" />
               <TextField
-                id="date"
-                label="Birthday"
+                label="Child Name"
+                name="childName"
+                value={childName}
+                onChange={this.handler}
+              />
+              <TextField
+                label="Age of Child"
+                type="Number"
+                name="ageOfChild"
+                value={ageOfChild}
+                onChange={this.handler}
+              />
+              <TextField
+                name="dateOfBirth"
+                value={dateOfBirth}
+                onChange={this.handler}
+                label="Date of Birth"
                 type="date"
                 InputLabelProps={{
                   shrink: true,
                 }}
               />
-              <TextField label="Number of Child" type="Number" />
+              <TextField
+                label="Number of Child"
+                type="Number"
+                name="numberOfChild"
+                value={numberOfChild}
+                onChange={this.handler}
+              />
               <br />
               <br />
               <FormLabel component="legend">Gender</FormLabel>
               <RadioGroup
                 aria-label="gender"
                 name="gender"
-                // value={value}
-                // onChange={handleChange}
+                value={gender}
+                onChange={this.handler}
               >
                 <FormControlLabel
                   value="female"
@@ -178,52 +290,42 @@ class Main extends Component {
                 Status of Routine Vaccination of 0-23 month of Child.{' '}
               </Typography>
 
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={ipv}
-                    onChange={this.handlerCheckbox}
-                    name="ipv"
-                  />
-                }
-                label="IPV"
-              />
+              <FormLabel component="legend">Vaccination Status</FormLabel>
+              <RadioGroup
+                aria-label="gender"
+                name="vaccinationStatus"
+                value={vaccinationStatus}
+                onChange={this.handler}
+              >
+                <FormControlLabel value="yes" control={<Radio />} label="Yes" />
+                <FormControlLabel value="no" control={<Radio />} label="No" />
+              </RadioGroup>
 
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={peniaIII}
-                    onChange={this.handlerCheckbox}
-                    name="peniaIII"
-                  />
-                }
-                label="Penia III"
-              />
-
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={bcg}
-                    onChange={this.handlerCheckbox}
-                    name="bcg"
-                  />
-                }
-                label="BCG"
-              />
+              {vaccinationStatus === 'yes' ? (
+                <Vaccines
+                  ipv={ipv}
+                  bcg={bcg}
+                  peniaIII={peniaIII}
+                  handlerCheckbox={this.handlerCheckbox}
+                />
+              ) : (
+                ''
+              )}
+              {vaccinationStatus === 'no' ? (
+                <Reason
+                  handlerCheckbox={this.handlerCheckbox}
+                  code1={code1}
+                  code2={code2}
+                  code3={code3}
+                  code4={code4}
+                  code5={code5}
+                  code6={code6}
+                />
+              ) : (
+                ''
+              )}
 
               <input type="submit" value="Submit Form" />
-
-              {/* <Button
-              
-                variant="contained"
-                color="primary"
-                component="span"
-                onSubmit={() => {
-                  this.submit();
-                }}
-              >
-                Submit Form
-              </Button> */}
             </form>
           );
         })}

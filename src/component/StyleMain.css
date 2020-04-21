@@ -1,4 +1,4 @@
-/* p {
+p {
   margin-bottom: 5px;
 }
 label {
@@ -55,4 +55,8 @@ label {
 }
 .Back:hover {
   background-color: #9e631b;
-} */
+}
+
+.button {
+  display: flex;
+}
